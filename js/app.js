@@ -1,8 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-
-
+const cards = ['diamond','plane','anchor','bolt','cube','leaf','bicycle','bomb'];
+console.log(shuffle(cards));
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
