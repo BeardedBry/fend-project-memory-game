@@ -1,14 +1,32 @@
 /*
  * Create a list that holds all of your cards
  */
-const cards = ['diamond','plane','anchor','bolt','cube','leaf','bicycle','bomb'];
-console.log(shuffle(cards));
+const deck = document.getElementById('deck');
+var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
+cards = shuffle(cards);
+
+const fragment = document.createDocumentFragment();
+cardHtml(...cards);
+//deck.appendChild(fragment);
+
+function cardHtml(name){
+    const newCard = document.createElement('li').classList.add('card');
+    const newI = document.createElement('i').classList.add('fa',name);
+    deck.appendChild(newCard);
+}
+
+console.log(cards);
+
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+function gameInit(){
+
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
