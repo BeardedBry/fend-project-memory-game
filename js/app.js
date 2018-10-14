@@ -1,19 +1,11 @@
 /*
  * Create a list that holds all of your cards
  */
-const deck = document.getElementById('deck');
-var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
-cards = shuffle(cards);
+//var ul = document.getElementById('deck');
+var container = document.querySelector('.container');
+var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb','fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
 
-const fragment = document.createDocumentFragment();
-cardHtml(...cards);
-//deck.appendChild(fragment);
-
-function cardHtml(name){
-    const newCard = document.createElement('li').classList.add('card');
-    const newI = document.createElement('i').classList.add('fa',name);
-    deck.appendChild(newCard);
-}
+gameInit();
 
 console.log(cards);
 
@@ -25,6 +17,28 @@ console.log(cards);
  *   - add each card's HTML to the page
  */
 function gameInit(){
+
+    var ul = document.createElement('ul');
+    ul.classList.add('deck');
+    //ul.id.add('deck');
+    container.appendChild(ul);
+    
+    function cardHtml(name){
+        const newCard = document.createElement('li');
+        const newI = document.createElement('i');
+        newCard.classList.add('card','show');
+        newI.classList.add('fa',name);
+    
+        newCard.appendChild(newI);
+        ul.appendChild(newCard);
+    }
+
+    cards = shuffle(cards);
+
+
+    for (let x = 0; x < cards.length; x++){
+        cardHtml(cards[x]);
+    }
 
 }
 
