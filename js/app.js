@@ -17,8 +17,10 @@ console.log(cards);
  *   - add each card's HTML to the page
  */
 function gameInit(){
-
+    
     var ul = document.createElement('ul');
+    var counter = 0;
+    var openCards = [];
     ul.classList.add('deck');
     //ul.id.add('deck');
     container.appendChild(ul);
@@ -26,7 +28,7 @@ function gameInit(){
     function cardHtml(name){
         const newCard = document.createElement('li');
         const newI = document.createElement('i');
-        newCard.classList.add('card','show');
+        newCard.classList.add('card');
         newI.classList.add('fa',name);
     
         newCard.appendChild(newI);
@@ -34,11 +36,35 @@ function gameInit(){
     }
 
     cards = shuffle(cards);
-
-
     for (let x = 0; x < cards.length; x++){
         cardHtml(cards[x]);
     }
+
+
+    ul.addEventListener('click', function(evt){
+        evt.target.classList.toggle('show');
+
+        openCards.push(evt.target.innerHTML);
+        //openCards.push(evt.target.firstChildElement.classList.item);
+
+        if(openCards.length === 2){
+            if(openCards[0] === openCards[1]){
+                //match();
+                console.log("match");
+            }else{
+                //nonMatch();
+                console.log("non match");
+            }
+            openCards = [];
+            console.log(openCards);
+        }
+
+        //console.log(firstCard);
+       /*  counter++;
+        if(counter > 1){
+            document.querySelectorAll('li').classList.remove('show');;
+        } */
+    })
 
 }
 
