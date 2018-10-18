@@ -1,14 +1,12 @@
 /*
- * Create a list that holds all of your cards
+ * A list that holds all of your cards
  */
-//var ul = document.getElementById('deck');
 var container = document.querySelector('.container');
 var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb','fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
-
+var counter = 0;
 gameInit();
 
 console.log(cards);
-
 
 /*
  * Display the cards on the page
@@ -24,7 +22,13 @@ function gameInit(){
     ul.classList.add('deck');
     //ul.id.add('deck');
     container.appendChild(ul);
+
+    cards = shuffle(cards);
+    for (let x = 0; x < cards.length; x++){
+        cardHtml(cards[x]);
+    }
     
+    // Creates the cards
     function cardHtml(name){
         const newCard = document.createElement('li');
         const newI = document.createElement('i');
@@ -35,36 +39,52 @@ function gameInit(){
         ul.appendChild(newCard);
     }
 
-    cards = shuffle(cards);
-    for (let x = 0; x < cards.length; x++){
-        cardHtml(cards[x]);
-    }
-
-
     ul.addEventListener('click', function(evt){
-        evt.target.classList.toggle('show');
 
-        openCards.push(evt.target.innerHTML);
-        //openCards.push(evt.target.firstChildElement.classList.item);
+        if(evt.target.tagName === 'LI' && openCards.length < 2){
 
-        if(openCards.length === 2){
-            if(openCards[0] === openCards[1]){
-                //match();
-                console.log("match");
-            }else{
-                //nonMatch();
-                console.log("non match");
+            if(!evt.target.classList.contains('show')){
+                evt.target.classList.toggle('show');
+                openCards.push(evt.target.innerHTML);
             }
-            openCards = [];
-            console.log(openCards);
+
+            if(openCards.length === 2){
+                
+                var cardsShowing = document.querySelectorAll('li.card.show'); // Select cards that are showing.
+              
+                if(openCards[0] === openCards[1]){
+                    match();
+                }else{
+                    nonMatch();
+                }
+                console.log(openCards);
+                counter++;
+            }
+            
         }
 
-        //console.log(firstCard);
-       /*  counter++;
-        if(counter > 1){
-            document.querySelectorAll('li').classList.remove('show');;
-        } */
+        function match(){
+            console.log("match!");
+            setTimeout(function(){
+                cardsShowing[0].classList.toggle('show');
+                cardsShowing[1].classList.toggle('show');
+                openCards = [];
+            }, 1000);
+        }
+    
+        function nonMatch(){
+            console.log("non match!");
+            setTimeout(function(){
+                cardsShowing[0].classList.toggle('show');
+                cardsShowing[1].classList.toggle('show');
+                openCards = [];
+            }, 1000);
+        }
+
+
     })
+
+   
 
 }
 
