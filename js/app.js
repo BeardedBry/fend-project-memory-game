@@ -1,9 +1,11 @@
-/*
- * A list that holds all of your cards
- */
+//todo: Add timer. Add win conditions.
+
+// List of cards
+
 var container = document.querySelector('.container');
 var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb','fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
-var restart = document.querySelector('.fa-repeat').addEventListener('click', function(){
+
+var restart = document.querySelector('.fa-repeat').addEventListener('click', function(){ // Restarts game
     document.querySelector('.deck').remove();
     document.querySelector('.stars').remove();
     gameInit();
@@ -63,7 +65,7 @@ function gameInit(){
 
     ul.addEventListener('click', function(evt){
 
-        if(evt.target.tagName === 'LI' && openCards.length < 2){ //Listener only in effect when there aren't two open cards.
+        if(evt.target.tagName === 'LI' && openCards.length < 2){ //Listener only triggers when there aren't two open cards currently.
 
             if(!evt.target.classList.contains('show')){
                 evt.target.classList.add('show', 'open');
@@ -82,8 +84,12 @@ function gameInit(){
                 console.log(openCards);
                 counter++;
                 moves.innerHTML = counter;
-                if(counter > 14){
-
+                if(counter > 14 && stars.childElementCount > 2){
+                    stars.firstElementChild.remove();
+                } else if(counter > 16 && stars.childElementCount > 1){
+                    stars.firstElementChild.remove();
+                }  else if(counter > 19 && stars.childElementCount > 0){
+                    stars.firstElementChild.remove();
                 }
             }
             
