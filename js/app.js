@@ -5,6 +5,7 @@ var container = document.querySelector('.container');
 var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb','fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
 var restart = document.querySelector('.fa-repeat').addEventListener('click', function(){
     document.querySelector('.deck').remove();
+    document.querySelector('.stars').remove();
     gameInit();
 });
 gameInit();
@@ -20,22 +21,39 @@ console.log(cards);
 function gameInit(){
 
     var ul = document.createElement('ul');
+    var stars = document.createElement('ul');
     var counter = 0;
     var moves = document.querySelector('.moves');
+    var scorePanel = document.querySelector('.score-panel');
     var openCards = [];
+    moves.innerHTML = counter;
     ul.classList.add('deck');
-    //ul.id.add('deck');
-    container.appendChild(ul);
+    stars.classList.add('stars')
 
+    container.appendChild(ul);
+    scorePanel.insertAdjacentElement('afterbegin', stars);
+
+    // Creates the stars
+    for (let x = 0; x < 3; x++){
+        starHtml();
+    }
+    function starHtml(){
+        const starLi = document.createElement('li');
+        const starI = document.createElement('i');
+        starI.classList.add('fa', 'fa-star');
+        starLi.appendChild(starI)
+        stars.appendChild(starLi);
+    }
+
+     // Creates the cards
     cards = shuffle(cards);
     for (let x = 0; x < cards.length; x++){
         cardHtml(cards[x]);
     }
-    
-    // Creates the cards
     function cardHtml(name){
         const newCard = document.createElement('li');
         const newI = document.createElement('i');
+   
         newCard.classList.add('card');
         newI.classList.add('fa',name);
     
@@ -64,6 +82,9 @@ function gameInit(){
                 console.log(openCards);
                 counter++;
                 moves.innerHTML = counter;
+                if(counter > 14){
+
+                }
             }
             
         }
