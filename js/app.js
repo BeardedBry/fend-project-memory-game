@@ -3,7 +3,10 @@
  */
 var container = document.querySelector('.container');
 var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb','fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
-var counter = 0;
+var restart = document.querySelector('.fa-repeat').addEventListener('click', function(){
+    document.querySelector('.deck').remove();
+    gameInit();
+});
 gameInit();
 
 console.log(cards);
@@ -15,9 +18,10 @@ console.log(cards);
  *   - add each card's HTML to the page
  */
 function gameInit(){
-    
+
     var ul = document.createElement('ul');
     var counter = 0;
+    var moves = document.querySelector('.moves');
     var openCards = [];
     ul.classList.add('deck');
     //ul.id.add('deck');
@@ -41,15 +45,15 @@ function gameInit(){
 
     ul.addEventListener('click', function(evt){
 
-        if(evt.target.tagName === 'LI' && openCards.length < 2){
+        if(evt.target.tagName === 'LI' && openCards.length < 2){ //Listener only in effect when there aren't two open cards.
 
             if(!evt.target.classList.contains('show')){
-                evt.target.classList.toggle('show');
+                evt.target.classList.add('show', 'open');
                 openCards.push(evt.target.innerHTML);
             }
 
             if(openCards.length === 2){
-                
+
                 var cardsShowing = document.querySelectorAll('li.card.show'); // Select cards that are showing.
               
                 if(openCards[0] === openCards[1]){
@@ -59,6 +63,7 @@ function gameInit(){
                 }
                 console.log(openCards);
                 counter++;
+                moves.innerHTML = counter;
             }
             
         }
@@ -66,17 +71,19 @@ function gameInit(){
         function match(){
             console.log("match!");
             setTimeout(function(){
+                cardsShowing[0].classList.add('match');
+                cardsShowing[1].classList.add('match');
                 cardsShowing[0].classList.toggle('show');
                 cardsShowing[1].classList.toggle('show');
                 openCards = [];
-            }, 1000);
+            }, 600);
         }
     
         function nonMatch(){
             console.log("non match!");
             setTimeout(function(){
-                cardsShowing[0].classList.toggle('show');
-                cardsShowing[1].classList.toggle('show');
+                cardsShowing[0].classList.remove('show','open');
+                cardsShowing[1].classList.remove('show','open');
                 openCards = [];
             }, 1000);
         }
