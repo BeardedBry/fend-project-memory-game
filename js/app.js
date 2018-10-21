@@ -1,16 +1,17 @@
-//todo: Add win conditions.
-
-// List of cards
-
 var container = document.querySelector('.container');
 var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb','fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
 
-// Restarts game
+// Restarts game button
 var restart = document.querySelector('.fa-repeat').addEventListener('click', function(){ 
+    restartGame();
+});
+
+// Restart Game
+function restartGame(){
     document.querySelector('.deck').remove();
     document.querySelector('.stars').remove();
     gameInit();
-});
+}
 
 // Timer
 var timer = document.querySelector('.seconds'); // Timer
@@ -30,13 +31,12 @@ function keepTime(){
 
 
 //Starts game initially
+keepTime();
 gameInit();
 
 function gameInit(){
-
     time = 0;
     timer.innerHTML = time;
-    keepTime();
 
     var ul = document.createElement('ul');
     var stars = document.createElement('ul');
@@ -44,6 +44,7 @@ function gameInit(){
     var moves = document.querySelector('.moves');
     var scorePanel = document.querySelector('.score-panel');
     var openCards = [];
+    var totalMatches = 0;
     
     moves.innerHTML = counter;
     ul.classList.add('deck');
@@ -100,10 +101,10 @@ function gameInit(){
                 }else{
                     nonMatch();
                 }
-                console.log(openCards);
+
                 counter++;
                 moves.innerHTML = counter;
-                if(counter > 13 && stars.childElementCount > 2){
+                if(counter > 13 && stars.childElementCount > 2){ //Changes stars based on move ammount.
                     stars.firstElementChild.remove();
                 } else if(counter > 15 && stars.childElementCount > 1){
                     stars.firstElementChild.remove();
@@ -122,6 +123,10 @@ function gameInit(){
                 cardsShowing[0].classList.toggle('show');
                 cardsShowing[1].classList.toggle('show');
                 openCards = [];
+                totalMatches++;
+                if(totalMatches === 8){
+                    victory();
+                }
             }, 600);
         }
     
@@ -136,6 +141,11 @@ function gameInit(){
 
 
     })
+
+    function victory(){
+        window.alert("Congratulations you win! \n Your rating was " + stars.childElementCount + " Stars. Your time was: " +  timer.innerHTML + " seconds. \n Would you like to play again?");
+        restartGame();
+    }
 
 }
 
@@ -153,15 +163,3 @@ function shuffle(array) {
 
     return array;
 }
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
