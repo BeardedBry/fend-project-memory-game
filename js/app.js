@@ -1,26 +1,42 @@
-//todo: Add timer. Add win conditions.
+//todo: Add win conditions.
 
 // List of cards
 
 var container = document.querySelector('.container');
 var cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb','fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
 
-var restart = document.querySelector('.fa-repeat').addEventListener('click', function(){ // Restarts game
+// Restarts game
+var restart = document.querySelector('.fa-repeat').addEventListener('click', function(){ 
     document.querySelector('.deck').remove();
     document.querySelector('.stars').remove();
     gameInit();
 });
+
+// Timer
+var timer = document.querySelector('.seconds'); // Timer
+var time = 0;
+var timeEnd;
+
+function keepTime(){
+   timeEnd = setTimeout(function(){
+         setTimeout(function(){
+           time++;
+           keepTime();
+        },1000)
+  timer.innerHTML = time;
+ },0);
+ document.querySelector('.fa-repeat').addEventListener('click', function(){clearTimeout(timeEnd);}); 
+}
+
+
+//Starts game initially
 gameInit();
 
-console.log(cards);
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 function gameInit(){
+
+    time = 0;
+    timer.innerHTML = time;
+    keepTime();
 
     var ul = document.createElement('ul');
     var stars = document.createElement('ul');
@@ -28,6 +44,7 @@ function gameInit(){
     var moves = document.querySelector('.moves');
     var scorePanel = document.querySelector('.score-panel');
     var openCards = [];
+    
     moves.innerHTML = counter;
     ul.classList.add('deck');
     stars.classList.add('stars')
@@ -63,6 +80,8 @@ function gameInit(){
         ul.appendChild(newCard);
     }
 
+
+    // Event listeners for Cards.
     ul.addEventListener('click', function(evt){
 
         if(evt.target.tagName === 'LI' && openCards.length < 2){ //Listener only triggers when there aren't two open cards currently.
@@ -84,11 +103,11 @@ function gameInit(){
                 console.log(openCards);
                 counter++;
                 moves.innerHTML = counter;
-                if(counter > 14 && stars.childElementCount > 2){
+                if(counter > 13 && stars.childElementCount > 2){
                     stars.firstElementChild.remove();
-                } else if(counter > 16 && stars.childElementCount > 1){
+                } else if(counter > 15 && stars.childElementCount > 1){
                     stars.firstElementChild.remove();
-                }  else if(counter > 19 && stars.childElementCount > 0){
+                }  else if(counter > 16 && stars.childElementCount > 0){
                     stars.firstElementChild.remove();
                 }
             }
@@ -117,8 +136,6 @@ function gameInit(){
 
 
     })
-
-   
 
 }
 
