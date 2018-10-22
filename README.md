@@ -1,6 +1,7 @@
 # Memory Game Project
 
-The game is played by clicking on face down cards to reveal the card. Match every card to win.
+The game is played by clicking on face down cards to reveal the card. The timer begins and a star rating is given based on the 
+amount of moves a player makes. Match every card to win.
 
 # Game Dependencies
 
